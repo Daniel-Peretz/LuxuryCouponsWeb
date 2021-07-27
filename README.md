@@ -1,11 +1,36 @@
-# Getting Started with Create React App
+# Luxury Coupons Web - Client Side 💻
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Luxury Coupons web using React library, Redux and MySQL DB.
 
-## Available Scripts
+It's a coupons management system, which allows companies to produce coupons,
 
-In the project directory, you can run:
+as part of advertising campaigns, and register customers can purchase them.
 
+Access to the system is divided into three types of clients:
+1. Administrator.
+2. Comapny.
+3. Customer.
+
+Each client is able to login to the system and execute specific operations.
+
+## Installations 🔧
+
+I've used VSC for the development environment,.\
+https://code.visualstudio.com/
+
+and MySQL Workbench for DB: user name: root, password: 12345678..\
+https://www.mysql.com/downloads/
+
+If you want to use the code properly and execute functions, .\
+go to LuxuryCouponsBackend and run the server side also.
+
+## Run Scripts 👩🏻‍💻
+
+In the project terminal, you can run:.\
+### `npm install`
+for building all node modules folder.
+
+and then:.\
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -14,33 +39,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Remarks 📝
+I've build this project with 2 programmers as part of the final project in our course - Java Full Stack..\
+Hope you will enjoyed and liked the project like i did 😄
