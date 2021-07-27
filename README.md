@@ -18,7 +18,7 @@ and MySQL Workbench for DB: user name: root, password: 12345678.\
 https://www.mysql.com/downloads/
 
 If you want to use the code properly and execute functions,\
-go to LuxuryCouponsBackend and run the server side also.\
+go to LuxuryCouponsBackend and run the server side also.
 
 ## Run Scripts 👩🏻‍💻
 
