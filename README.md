@@ -22,7 +22,7 @@ If you want to use the code properly and execute functions,\
 go to LuxuryCouponsBackend and run the server side also.
 
 ## Run Scripts 👩🏻‍💻
-
+For cheking the program - Download to zip, export the zip and follow the instructions:\
 In the project terminal, you can run:
 ### `npm install`
 for building all node modules folder.
