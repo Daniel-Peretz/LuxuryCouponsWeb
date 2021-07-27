@@ -6,7 +6,8 @@ as part of advertising campaigns, and register customers can purchase them.\
 Access to the system is divided into three types of clients:
 1. Administrator.
 2. Comapny.
-3. Customer.\
+3. Customer.
+
 Each client is able to login to the system and execute specific operations.
 
 ## Installations 🔧
