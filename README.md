@@ -22,11 +22,11 @@ go to LuxuryCouponsBackend and run the server side also.\
 
 ## Run Scripts 👩🏻‍💻
 
-In the project terminal, you can run:\
+In the project terminal, you can run:
 ### `npm install`
 for building all node modules folder.
 
-and then:\
+and then:
 ### `npm start`
 
 Runs the app in the development mode.\
