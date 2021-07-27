@@ -1,33 +1,32 @@
 # Luxury Coupons Web - Client Side 💻
 
 Luxury Coupons web using React library, Redux and MySQL DB.\
-It's a coupons management system, which allows companies to produce coupons,.\
+It's a coupons management system, which allows companies to produce coupons,\
 as part of advertising campaigns, and register customers can purchase them.\
 Access to the system is divided into three types of clients:
 1. Administrator.
 2. Comapny.
-3. Customer.
-
+3. Customer.\
 Each client is able to login to the system and execute specific operations.
 
 ## Installations 🔧
 
-I've used VSC for the development environment,
+I've used VSC for the development environment,\
 https://code.visualstudio.com/
 
-and MySQL Workbench for DB: user name: root, password: 12345678.
+and MySQL Workbench for DB: user name: root, password: 12345678.\
 https://www.mysql.com/downloads/
 
-If you want to use the code properly and execute functions,
-go to LuxuryCouponsBackend and run the server side also.
+If you want to use the code properly and execute functions,\
+go to LuxuryCouponsBackend and run the server side also.\
 
 ## Run Scripts 👩🏻‍💻
 
-In the project terminal, you can run:.\
+In the project terminal, you can run:\
 ### `npm install`
 for building all node modules folder.
 
-and then:.\
+and then:\
 ### `npm start`
 
 Runs the app in the development mode.\
