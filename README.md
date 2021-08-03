@@ -5,7 +5,7 @@ It's a coupons management system, which allows companies to produce coupons,\
 as part of advertising campaigns, and register customers can purchase them.\
 Access to the system is divided into three types of clients:
 1. Administrator.
-2. Comapny.
+2. Company.
 3. Customer.
 
 Each client is able to login to the system and execute specific operations.
