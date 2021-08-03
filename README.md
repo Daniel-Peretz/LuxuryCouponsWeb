@@ -42,5 +42,5 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ## Remarks 📝
-I've build this project with 2 programmers as part of the final project in our course - Java Full Stack..\
+I've build this project with 2 programmers as part of the final project in our course - Java Full Stack.\
 Hope you will enjoyed and liked the project like i did 😄
