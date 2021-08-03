@@ -15,6 +15,9 @@ Each client is able to login to the system and execute specific operations.
 I've used VSC for the development environment,\
 https://code.visualstudio.com/
 
+Download node.js:\
+https://nodejs.org/en/
+
 and MySQL Workbench for DB: user name: root, password: 12345678.\
 https://www.mysql.com/downloads/
 
