@@ -12,12 +12,14 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import { Category } from "../../../../../Models/CategoryModel";
 import { logoutAuthAction } from "../../../../../Redux/AuthState";
+import { useHistory } from "react-router-dom";
 
 function GetCustomerCoupons(): JSX.Element {
 
     const [coupons, setCoupons] = useState<Coupon[]>([]);
     const [preferDarkMode, setPreferDarkMode] = useState(false);
     const [filter, setFilter] = useState(false);
+    const history = useHistory();
     const theme = createMuiTheme({
         palette: {
             type: preferDarkMode ? "dark" : "light"
@@ -27,15 +29,21 @@ function GetCustomerCoupons(): JSX.Element {
     const fetchCoupons = async () => {
         try {
             if (decodeGetType() === ClientType.CUSTOMER) {
-                const { data: coupons }: { data: Coupon[] } = await JwtAxios.get("http://localhost:8080/CUSTOMER/getCustomerCoupons");
+                const { data: coupons }: { data: Coupon[] } = await JwtAxios.get("/CUSTOMER/getCustomerCoupons");
                 setCoupons(coupons);
                 myStore().store.dispatch(GetCustomerCouponsAction(coupons));
             }
-        } catch (err){
+        } catch (err) {
+            console.log(err.resp)
+            if(!(err.response === undefined)){
             if(err.response.status === 500){
-                myStore().store.dispatch(logoutAuthAction())
+              myStore().store.dispatch(logoutAuthAction())
             }
             notify.error(err.response.data);
+            } else{
+              notify.error("Oops something went wrong")
+            }
+            history.push("/home")
         }
     }
 
