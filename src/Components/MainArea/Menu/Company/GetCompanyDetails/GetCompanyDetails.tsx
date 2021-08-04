@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { ClientType } from "../../../../../Models/ClientTypeModel";
 import Company from "../../../../../Models/CompanyModel";
 import { logoutAuthAction } from "../../../../../Redux/AuthState";
@@ -12,27 +13,34 @@ import notify from "../../../../../Services/Notify/Notify";
 function GetCompanyDetails(): JSX.Element {
     
     const [myCompany, setMyCompany] = useState<Company>();
+    const history = useHistory();
     
     const fetchCompany = async () => {
         try {
             couponsIfNull();
             if (decodeGetType() === ClientType.COMPANY) {
-                const { data: myCompany }: { data: Company } = await JwtAxios.get("http://localHost:8080/COMPANY/companyDetails");
+                const { data: myCompany }: { data: Company } = await JwtAxios.get("/COMPANY/companyDetails");
                 myStore().store.dispatch(GetCompanyDetailsAction(myCompany));
                 setMyCompany(myCompany);
             }
-        } catch (err){
+        } catch (err) {
+            console.log(err.resp)
+            if(!(err.response === undefined)){
             if(err.response.status === 500){
-                myStore().store.dispatch(logoutAuthAction())
+              myStore().store.dispatch(logoutAuthAction())
             }
             notify.error(err.response.data);
+            } else{
+              notify.error("Oops something went wrong")
+            }
+            history.push("/home")
         }
     }
     
     const couponsIfNull = async () => {
         try{
             if (myStore().store.getState().companyState.Coupons.length === 0){
-                const { data: coupons } = await JwtAxios.get("http://localHost:8080/COMPANY/getCompanyCoupons");
+                const { data: coupons } = await JwtAxios.get("/COMPANY/getCompanyCoupons");
                 myStore().store.dispatch(GetCompanyCouponsAction(coupons));
         }} catch (err){
             if(err.response.status === 500){
