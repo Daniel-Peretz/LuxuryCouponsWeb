@@ -24,13 +24,14 @@ import Brightness7Icon from "@material-ui/icons/Brightness7";
 import notify from "../../../../../Services/Notify/Notify";
 import JwtAxios from "../../../../../Services/JwtAxios/JwtAxios";
 import { logoutAuthAction } from "../../../../../Redux/AuthState";
+import { useHistory } from "react-router-dom";
 
 function GetCompanyCoupons(): JSX.Element {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [preferDarkMode, setPreferDarkMode] = useState(false);
-  const [preview, setPreview] = useState<string>();
   const [image, setImage] = useState<string>();
   const [filter, setFilter] = useState(false);
+  const history = useHistory();
   const myFileReader = new FileReader();
   const theme = createMuiTheme({
     palette: {
@@ -70,18 +71,24 @@ function GetCompanyCoupons(): JSX.Element {
     try {
       if (decodeGetType() === ClientType.COMPANY) {
         const { data: coupons }: { data: Coupon[] } = await JwtAxios.get(
-          "http://localHost:8080/COMPANY/getCompanyCoupons"
+          "/COMPANY/getCompanyCoupons"
         );
         setCoupons(coupons);
         myStore().store.dispatch(GetCompanyCouponsAction(coupons));
       }
     } catch (err) {
+      console.log(err.resp)
+      if(!(err.response === undefined)){
       if(err.response.status === 500){
-      myStore().store.dispatch(logoutAuthAction())
-      }
+        myStore().store.dispatch(logoutAuthAction())
+        }
       notify.error(err.response.data);
+      } else{
+        notify.error("Oops something went wrong")
+      }
+      history.push("/home")
     }
-  };
+  }
 
   useEffect(() => {
     fetchCoupons();
@@ -236,7 +243,7 @@ function GetCompanyCoupons(): JSX.Element {
                   setTimeout(async () => {
                     try {
                       const response = await JwtAxios.post<Coupon>(
-                        "http://localhost:8080/COMPANY/addCoupon",
+                        "/COMPANY/addCoupon",
                         newRow
                       );
                       myStore().store.dispatch(AddCouponAction(newRow));
@@ -258,7 +265,7 @@ function GetCompanyCoupons(): JSX.Element {
                 setTimeout(async () => {
                   try {
                     const response = await JwtAxios.delete<Coupon>(
-                      "http://localhost:8080/COMPANY/deleteCoupon/" + couponId
+                      "/COMPANY/deleteCoupon/" + couponId
                     );
                     myStore().store.dispatch(DeleteCouponAction(selectedRow));
                     fetchCoupons();
@@ -277,7 +284,7 @@ function GetCompanyCoupons(): JSX.Element {
                 setTimeout(async () => {
                   try {
                     const response = await JwtAxios.put<Coupon>(
-                      "http://localhost:8080/COMPANY/updateCoupon",
+                      "/COMPANY/updateCoupon",
                       updatedRow
                     );
                     myStore().store.dispatch(UpdateCouponAction(updatedRow));
