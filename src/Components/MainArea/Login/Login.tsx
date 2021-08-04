@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import CredentialsModel from "../../../Models/CredentialModel";
-import { currentMenuAction, isLoggedAction, loginAction } from "../../../Redux/AuthState";
+import { currentMenuAction, isLoggedAction, loginAction, logoutAuthAction } from "../../../Redux/AuthState";
 import notify from "../../../Services/Notify/Notify";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import { useState } from "react";
@@ -24,7 +24,7 @@ function Login(): JSX.Element {
   async function send(credential: CredentialsModel) {
     try {
       const response = await axios.post<UserModel>(
-        "http://localhost:8080/"+credential.clientType+"/login",credential
+        "/"+credential.clientType+"/login",credential
       );
       myStore().store.dispatch(loginAction(response.data));
       myStore().store.dispatch(isLoggedAction(true));
@@ -32,7 +32,16 @@ function Login(): JSX.Element {
       notify.success("you have been successfully logged in !!!");
       history.push("/home");
     } catch (err) {
+      console.log(err.resp)
+      if(!(err.response === undefined)){
+        if(err.response.status === 500){
+        myStore().store.dispatch(logoutAuthAction())
+        }
       notify.error(err.response.data);
+      } else{
+        notify.error("Oops something went wrong")
+      }
+      history.push("/home")
     }
   }
 
