@@ -21,11 +21,13 @@ import MaterialTable from "material-table";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import { logoutAuthAction } from "../../../../../Redux/AuthState";
+import { useHistory } from "react-router-dom";
 
 function GetAllCustomers(): JSX.Element {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [preferDarkMode, setPreferDarkMode] = useState(false);
   const [filter, setFilter] = useState(false);
+  const history = useHistory();
   const theme = createMuiTheme({
     palette: {
       type: preferDarkMode ? "dark" : "light",
@@ -64,18 +66,24 @@ function GetAllCustomers(): JSX.Element {
     try {
       if (decodeGetType() === ClientType.ADMIN) {
         const { data: customers }: { data: Customer[] } = await JwtAxios.get(
-          "http://localHost:8080/ADMIN/getAllCustomers"
+          "/ADMIN/getAllCustomers"
         );
         myStore().store.dispatch(GetAllCustomersAction(customers));
         setCustomers(customers);
       }
     } catch (err) {
+      console.log(err.resp)
+      if(!(err.response === undefined)){
       if(err.response.status === 500){
         myStore().store.dispatch(logoutAuthAction())
         }
       notify.error(err.response.data);
+      } else{
+        notify.error("Oops something went wrong")
+      }
+      history.push("/home")
     }
-  };
+  }
 
   useEffect(() => {
     fetchCustomers();
@@ -181,7 +189,7 @@ function GetAllCustomers(): JSX.Element {
                 setTimeout(async () => {
                   try {
                     const response = await JwtAxios.delete<Customer>(
-                      "http://localhost:8080/ADMIN/deleteCustomer/" +
+                      "/ADMIN/deleteCustomer/" +
                         companyEmail
                     );
                     myStore().store.dispatch(DeleteCustomerAction(selectedRow));
@@ -202,7 +210,7 @@ function GetAllCustomers(): JSX.Element {
                   setTimeout(async () => {
                     try {
                       const response = await JwtAxios.put<Customer>(
-                        "http://localhost:8080/ADMIN/adminUpdateCustomer",
+                        "/ADMIN/adminUpdateCustomer",
                         updatedRow
                       );
                       myStore().store.dispatch(
