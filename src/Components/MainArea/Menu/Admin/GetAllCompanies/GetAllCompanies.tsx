@@ -21,11 +21,13 @@ import {
 import { TablePagination, TablePaginationProps } from '@material-ui/core';
 import { logoutAuthAction } from "../../../../../Redux/AuthState";
 import MaterialTable from 'material-table';
+import { useHistory } from "react-router-dom";
 
 function GetAllCompanies(): JSX.Element {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [preferDarkMode, setPreferDarkMode] = useState(false);
   const [filter, setFilter] = useState(false);
+  const history = useHistory();
   const theme = createMuiTheme({
     palette: {
       type: preferDarkMode ? "dark" : "light",
@@ -64,18 +66,24 @@ function GetAllCompanies(): JSX.Element {
     try {
       if (decodeGetType() === ClientType.ADMIN) {
         const { data: companies }: { data: Company[] } = await JwtAxios.get(
-          "http://localhost:8080/ADMIN/getAllCompanies"
+          "/ADMIN/getAllCompanies"
         );
         myStore().store.dispatch(GetAllCompaniesAction(companies));
         setCompanies(companies);
       }
     } catch (err) {
+      console.log(err.resp)
+      if(!(err.response === undefined)){
       if(err.response.status === 500){
         myStore().store.dispatch(logoutAuthAction())
         }
       notify.error(err.response.data);
+      } else{
+        notify.error("Oops something went wrong")
+      }
+      history.push("/home")
     }
-  };
+  }
 
   useEffect(() => {
     fetchCompanies();
@@ -171,7 +179,7 @@ function GetAllCompanies(): JSX.Element {
                   setTimeout(async () => {
                     try {
                       const response = await JwtAxios.post<Company>(
-                        "http://localHost:8080/ADMIN/addCompany",
+                        "/ADMIN/addCompany",
                         newRow
                       );
                       myStore().store.dispatch(AddCompanyAction(newRow));
@@ -193,7 +201,7 @@ function GetAllCompanies(): JSX.Element {
                 setTimeout(async () => {
                   try {
                     const response = await JwtAxios.delete<Company>(
-                      "http://localhost:8080/ADMIN/deleteCompany/" +
+                      "/ADMIN/deleteCompany/" +
                         companyEmail
                     );
                     myStore().store.dispatch(DeleteCompanyAction(selectedRow));
@@ -215,7 +223,7 @@ function GetAllCompanies(): JSX.Element {
                   setTimeout(async () => {
                     try {
                       const response = await JwtAxios.put<Company>(
-                        "http://localHost:8080/ADMIN/updateCompany",
+                        "/ADMIN/updateCompany",
                         updatedRow
                       );
                       myStore().store.dispatch(UpdateCompanyAction(updatedRow));
