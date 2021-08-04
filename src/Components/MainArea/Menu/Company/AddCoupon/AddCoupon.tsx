@@ -21,7 +21,7 @@ function AddCoupon(): JSX.Element {
             if (decodeGetType() === ClientType.COMPANY) {
                 myFileHandler(coupon) 
                 const response = await JwtAxios.post<Coupon>(
-                    "http://localhost:8080/COMPANY/addCoupon",
+                    "/COMPANY/addCoupon",
                     myFormData
                 );
                 const myResponse = response.data;
@@ -29,11 +29,17 @@ function AddCoupon(): JSX.Element {
                 notify.success("New coupon added to the system");
                 history.push("/getCompanyCoupons");
             }
-        } catch (err){
+        } catch (err) {
+            console.log(err.resp)
+            if(!(err.response === undefined)){
             if(err.response.status === 500){
-                myStore().store.dispatch(logoutAuthAction())
+              myStore().store.dispatch(logoutAuthAction())
             }
             notify.error(err.response.data);
+            } else{
+              notify.error("Oops something went wrong")
+            }
+            history.push("/home")
         }
     }
 
