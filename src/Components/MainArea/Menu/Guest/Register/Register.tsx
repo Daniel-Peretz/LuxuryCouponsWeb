@@ -24,7 +24,7 @@ function Register(): JSX.Element {
   async function send(customer: Customer) {
     try {
         const response = await JwtAxios.post<Customer>(
-          "http://localhost:8080/guest/register",
+          "/guest/register",
           customer
         );
         const myResponse = response.data;
@@ -38,11 +38,17 @@ function Register(): JSX.Element {
             "<br/>Please login!"
         );
         history.push("/home");
-    } catch (err){
+    } catch (err) {
+      console.log(err.resp)
+      if(!(err.response === undefined)){
       if(err.response.status === 500){
         myStore().store.dispatch(logoutAuthAction())
-      }
+        }
       notify.error(err.response.data);
+      } else{
+        notify.error("Oops something went wrong")
+      }
+      history.push("/home")
     }
   }
 
