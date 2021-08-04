@@ -24,17 +24,23 @@ function UpdateCustomer(): JSX.Element {
                         nameHolder = item.firstName;
                     }
                 });
-                const response = await JwtAxios.put<Customer>("http://localhost:8080/CUSTOMER/updateCustomer", customer);
+                const response = await JwtAxios.put<Customer>("/CUSTOMER/updateCustomer", customer);
                 customer.firstName = nameHolder;
                 myStore().store.dispatch(UpdateCustomerAction(customer));
                 notify.success("Update successful!");
                 history.push("/home");
             }
         } catch (err) {
+            console.log(err.resp)
+            if(!(err.response === undefined)){
             if(err.response.status === 500){
-         myStore().store.dispatch(logoutAuthAction())
-        }
+              myStore().store.dispatch(logoutAuthAction())
+            }
             notify.error(err.response.data);
+            } else{
+              notify.error("Oops something went wrong")
+            }
+            history.push("/home")
         }
     }
 
