@@ -13,7 +13,7 @@ function CouponsStore(): JSX.Element {
 
     async function allCoupons() {
         try{
-        const response = await axios.get("http://localhost:8080/guest/allCoupons");
+        const response = await axios.get("/guest/allCoupons");
         const myResponse = response.data;
         setCoupons(myResponse);
         }catch(err){
@@ -27,7 +27,7 @@ function CouponsStore(): JSX.Element {
     async function getCouponsByCategory(category: Category) {
         try{
         const response = await axios.get(
-            "http://localhost:8080/guest/category/" +
+            "/guest/category/" +
             category
         );
         const myResponse = response.data;
