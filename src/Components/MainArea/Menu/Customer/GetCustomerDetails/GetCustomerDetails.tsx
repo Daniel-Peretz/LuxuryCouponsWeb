@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import Customer from "../../../../../Models/CustomerModel";
 import { logoutAuthAction } from "../../../../../Redux/AuthState";
 import { GetCustomerCouponsAction, GetCustomerDetailsAction } from "../../../../../Redux/CustomerState";
@@ -10,20 +11,27 @@ import notify from "../../../../../Services/Notify/Notify";
 function GetCustomerDetails(): JSX.Element {
 
     const [myCustomer, setMyCustomer] = useState<Customer>();
+    const history = useHistory();
 
     const fetchCustomer = async () => {
         try {
             couponsIfNull();
             if (myStore().store.getState().customerState.coupons.length == 0) {
-                const { data: myCustomer }: { data: Customer } = await JwtAxios.get("http://localhost:8080/CUSTOMER/getDetails");
+                const { data: myCustomer }: { data: Customer } = await JwtAxios.get("/CUSTOMER/getDetails");
                 myStore().store.dispatch(GetCustomerDetailsAction(myCustomer));
                 setMyCustomer(myCustomer);
             }
-        } catch (err){
+        } catch (err) {
+            console.log(err.resp)
+            if(!(err.response === undefined)){
             if(err.response.status === 500){
-                myStore().store.dispatch(logoutAuthAction())
+              myStore().store.dispatch(logoutAuthAction())
             }
             notify.error(err.response.data);
+            } else{
+              notify.error("Oops something went wrong")
+            }
+            history.push("/home")
         }
     }
 
@@ -33,7 +41,7 @@ function GetCustomerDetails(): JSX.Element {
 
     const couponsIfNull = async () => {
     try{    
-        const { data: coupons } = await JwtAxios.get("http://localhost:8080/CUSTOMER/getCustomerCoupons");
+        const { data: coupons } = await JwtAxios.get("/CUSTOMER/getCustomerCoupons");
         myStore().store.dispatch(GetCustomerCouponsAction(coupons));
     }
      catch (err) {
